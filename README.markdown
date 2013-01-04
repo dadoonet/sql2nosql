@@ -36,3 +36,23 @@ Build status
 Thanks to cloudbees for the [build status](https://buildhive.cloudbees.com): [![Build Status](https://buildhive.cloudbees.com/job/dadoonet/job/sql2nosql/badge/icon)](https://buildhive.cloudbees.com/job/dadoonet/job/sql2nosql/)
 
 [![Test trends](https://buildhive.cloudbees.com/job/dadoonet/job/sql2nosql/test/trend)](https://buildhive.cloudbees.com/job/dadoonet/job/sql2nosql/)
+
+Installation
+------------
+
+Start the server using jetty
+
+```sh
+$ mvn install
+$ cd demo-webapp
+$ mvn jetty:run
+```
+
+You can use the shortcut:
+
+```sh
+$ ./run.sh
+```
+
+You can then access the application using your browser: [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
+
