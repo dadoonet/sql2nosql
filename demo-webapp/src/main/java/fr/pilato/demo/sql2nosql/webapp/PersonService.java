@@ -7,15 +7,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.pilato.demo.sql2nosql.model.bean.Person;
-import fr.pilato.demo.sql2nosql.model.dao.PersonDao;
-import fr.pilato.demo.sql2nosql.model.dao.SearchDao;
 import fr.pilato.demo.sql2nosql.model.helper.PersonGenerator;
 import fr.pilato.demo.sql2nosql.webapp.util.ConnectionManager;
 import fr.pilato.demo.sql2nosql.webapp.util.KeyUtil;
 import fr.pilato.demo.sql2nosql.webapp.util.ViewUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,10 +42,7 @@ public class PersonService {
 
     CouchbaseClient client = ConnectionManager.getInstance();
     ObjectMapper mapper = new ObjectMapper();
-    @Autowired
-    PersonDao personDao;
-    @Autowired
-    SearchDao searchDao;
+
 
     private static final int numPersons = 1000;
 
@@ -58,30 +52,22 @@ public class PersonService {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public @ResponseBody Person get(@PathVariable String id) {
-        Person person = personDao.get(Integer.valueOf(id));
+    public
+    @ResponseBody
+    String get(@PathVariable String id) {
+        String person = (String)client.get( KeyUtil.getKey(KEY_PERSON_PREFIX, id) );
         if (logger.isDebugEnabled()) logger.debug("get({})={}", id, person);
-
         return person;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/")
-    public @ResponseBody String create(@RequestBody String json) {
+    public
+    @ResponseBody
+    String create(@RequestBody String json) {
         if (logger.isDebugEnabled()) logger.debug("create({})", json);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Person person = mapper.readValue(json, Person.class);
-            if (logger.isDebugEnabled()) logger.debug("After Jackson parsing: {}", person);
-            if (person != null) {
-                person = personDao.save(person);
-                if (logger.isDebugEnabled()) logger.debug("Person saved: {}", person);
-                return String.valueOf(person.getId());
-            }
-        } catch (IOException e) {
-            logger.error("Error while saving json", e);
-        }
-
-        return "";
+        String key = KeyUtil.nextValue(KEY_PERSON_PREFIX);
+        client.set(key, 0, json);
+        return key;
     }
 
 
