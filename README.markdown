@@ -18,7 +18,7 @@ You will find the following git branches:
 * 04-new-ui-angular/end AngularJS fully working
 * 05-search/start we start connecting Couchbase and Elasticsearch and add search to AngularJS
 * 05-search/end AngularJS with search fully working
-* 06-dashboards/start we start to build Kibana dashboards 
+* 06-dashboards/start we start to build Kibana dashboards
 * 06-dashboards/end Dashboards fully working
 
 To go a given step, just use `git checkout` command. Eg:
