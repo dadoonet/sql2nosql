@@ -114,3 +114,228 @@ You can add a `size` parameter to inject a given number of person (default to `1
 $ curl -XPOST http://localhost:8080/api/1/person/_init?size=1000000
 ```
 
+Elasticsearch
+=============
+
+Setup
+-----
+
+* Download Elasticsearch 0.19.12
+
+```sh
+$ curl https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.19.12.zip -o elasticsearch-0.19.12.zip
+$ unzip elasticsearch-0.19.12.zip
+$ cd elasticsearch-0.19.12
+```
+
+* Install couchbase plugin
+
+```sh
+# Download the plugin
+$ bin/plugin -install couchbaselabs/elasticsearch-transport-couchbase/1.0.0-dp
+
+# Set your credentials
+$ echo "couchbase.username: Administrator" >> config/elasticsearch.yml
+$ echo "couchbase.password: Administrator" >> config/elasticsearch.yml
+
+# Set the number of concurrent requests ES will handle
+$ echo "couchbase.maxConcurrentRequests: 256" >> config/elasticsearch.yml
+```
+
+Launch
+------
+
+* Start Elasticsearch
+
+```sh
+$ bin/elasticsearch -f
+```
+
+* Create a template for couchbaseCheckpoint internal document and for all other types
+
+```sh
+$ curl -XPUT http://localhost:9200/_template/couchbase -d '
+{
+    "template" : "*",
+    "order" : 10,
+    "mappings" : {
+        "couchbaseCheckpoint" : {
+            "_source" : {
+                "includes" : ["doc.*"]
+            },
+            "dynamic_templates": [
+                {
+                    "store_no_index": {
+                        "match": "*",
+                        "mapping": {
+                            "store" : "no",
+                            "index" : "no",
+                            "include_in_all" : false
+                        }
+                    }
+                }
+            ]
+        },
+        "_default_" : {
+            "properties" : {
+                "meta" : {
+                    "type" : "object",
+                    "enabled" : false
+                }
+            }
+        }
+    }
+}
+'
+```
+
+* Create the index `person`
+
+```sh
+$ curl -XPUT http://localhost:9200/person
+```
+
+Replication from Couchbase to Elasticsearch
+-------------------------------------------
+
+* Open your browser and log into [http://127.0.0.1:8091/](http://127.0.0.1:8091/)
+* Open XDCR Tab
+* Click on `Create Cluster Reference` and set the ip address to `localhost:9091`
+* Click on `Create Replication` and set `From Bucket` to `default`, `To cluster` to `Elasticsearch` and
+ set `To Bucket` to `person`)
+* Click on `Replicate`
+
+
+Check that everything is running fine
+-------------------------------------
+
+```sh
+$ curl 'http://localhost:9200/person/_count?q=*&pretty'
+```
+
+You should see a count > 0.
+
+You can reinject some data using the previous Database Initialisation API
+
+```sh
+$ curl -XPOST http://localhost:8080/api/1/person/_init
+```
+
+Elasticsearch
+=============
+
+Setup
+-----
+
+* Download Elasticsearch 0.20.6
+
+```sh
+curl https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.6.tar.gz -o elasticsearch-0.20.6.tar.gz
+tar xf elasticsearch-0.20.6.tar.gz
+cd elasticsearch-0.20.6
+```
+
+* Install couchbase plugin
+
+```sh
+# Download the plugin
+mkdir plugins; cd plugins
+curl http://packages.couchbase.com.s3.amazonaws.com/releases/elastic-search-adapter/1.0.0/elasticsearch-transport-couchbase-1.0.0.zip -o elasticsearch-transport-couchbase-1.0.0.zip
+unzip elasticsearch-transport-couchbase-1.0.0.zip -d elasticsearch-transport-couchbase
+cd ..
+
+# Set your credentials
+echo "couchbase.username: Administrator" >> config/elasticsearch.yml
+echo "couchbase.password: Administrator" >> config/elasticsearch.yml
+
+# Set the number of concurrent requests ES will handle
+echo "couchbase.maxConcurrentRequests: 256" >> config/elasticsearch.yml
+```
+
+You can also add some UI plugins:
+
+```
+bin/plugin -install mobz/elasticsearch-head
+bin/plugin -install lukas-vlcek/bigdesk
+bin/plugin -install karmi/elasticsearch-paramedic
+```
+
+Launch
+------
+
+* Start Elasticsearch
+
+```sh
+bin/elasticsearch -f
+```
+
+* Create a template for couchbaseCheckpoint internal document and for all other types
+
+```sh
+curl -XPUT http://localhost:9200/_template/couchbase -d '
+{
+    "template" : "*",
+    "order" : 10,
+    "mappings" : {
+        "couchbaseCheckpoint" : {
+            "_source" : {
+                "includes" : ["doc.*"]
+            },
+            "dynamic_templates": [
+                {
+                    "store_no_index": {
+                        "match": "*",
+                        "mapping": {
+                            "store" : "no",
+                            "index" : "no",
+                            "include_in_all" : false
+                        }
+                    }
+                }
+            ]
+        },
+        "_default_" : {
+            "properties" : {
+                "meta" : {
+                    "type" : "object",
+                    "enabled" : false
+                }
+            }
+        }
+    }
+}
+'
+```
+
+* Create the index `person`
+
+```sh
+curl -XPUT http://localhost:9200/person
+```
+
+Replication from Couchbase to Elasticsearch
+-------------------------------------------
+
+* Open your browser and log into [http://127.0.0.1:8091/](http://127.0.0.1:8091/)
+* Open XDCR Tab
+* Click on `Create Cluster Reference` and set the ip address to `localhost:9091`
+* Click on `Create Replication` and set `From Bucket` to `default`, `To cluster` to `Elasticsearch` and
+ set `To Bucket` to `person`)
+* Click on `Replicate`
+
+
+Check that everything is running fine
+-------------------------------------
+
+```sh
+curl 'http://localhost:9200/person/_count?q=*&pretty'
+```
+
+You should see a count > 0.
+
+You can reinject some data using the previous Database Initialisation API
+
+```sh
+curl -XPOST http://localhost:8080/api/1/person/_init
+```
+

@@ -4,11 +4,20 @@
     <div class="row">
             <div class="span6">
                 <input ng-model="query" type="text" class="input-medium search-query span6"
-                       name="query"  placeholder="Type something..." autocomplete="off">
+                       name="query"  placeholder="Type something..." autocomplete="off"
+                       z-keypress="search()">
             </div>
-            <div class="span2 offset2">
+            <div class="span2 offset1">
                 <button ng-click="search()" type="submit" class="btn btn-primary">Search</button>
             </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <p class="text-info">
+            Found <span class="badge badge-info">{{result.hits.total}}</span> hits in
+            <span class="badge badge-info">{{result.took}} ms</span>
+            </p>
+        </div>
     </div>
 
 
