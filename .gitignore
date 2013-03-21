@@ -1,0 +1,32 @@
+# Package and Class Files
+*.jar
+*.war
+*.ear
+*.class
+
+# Eclipse project files
+.classpath
+.project
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Maven build directory
+target/
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
