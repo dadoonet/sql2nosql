@@ -1,0 +1,45 @@
+<div class="container" >
+
+
+    <div class="row">
+            <div class="span6">
+                <input ng-model="query" type="text" class="input-medium search-query span6"
+                       name="query"  placeholder="Type something..." autocomplete="off">
+            </div>
+            <div class="span2 offset2">
+                <button ng-click="search()" type="submit" class="btn btn-primary">Search</button>
+            </div>
+    </div>
+
+
+    <div class="row">
+		<div class="span8">
+		      <table class="table" >
+		        <thead>  
+		          <tr>
+                      <th>Id</th>
+                      <th>Name</th>
+                      <th>Date Of Birth</th>
+                      <th>City</th>
+                      <th>Country</th>
+		          </tr>
+			     </thead>  
+		        <tbody>
+		          <tr ng-repeat="entry in entries" >
+                      <td>{{entry.id}}</td>
+                      <td><a href="#/person/{{entry.id}}">{{entry.name}}</a></td>
+                      <td>{{entry.dateOfBirth}}</td>
+                      <td>{{entry.address.city}}</td>
+                      <td>{{entry.address.country}}</td>
+		          </tr>
+		
+		        <tbody>
+			</table>
+		</div>
+		<div class="span6">
+		</div>
+	</div>
+
+</div>
+
+
