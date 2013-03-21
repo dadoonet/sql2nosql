@@ -1,0 +1,327 @@
+{
+    "title": "devoxxfrance",
+    "rows": [
+        {
+            "title": "Demo",
+            "collapse": false,
+            "height": "50px",
+            "panels": [
+                {
+                    "span": 9,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "text",
+                    "title": "",
+                    "content": "Devoxx Demo\n===========\n\nWelcome to our **Devoxx demo**",
+                    "style": {
+                        "font-size": "14pt"
+                    },
+                    "mode": "markdown"
+                },
+                {
+                    "title": "Dashboard Loader",
+                    "type": "dashcontrol",
+                    "span": 3,
+                    "group": "default",
+                    "save": {
+                        "gist": true,
+                        "elasticsearch": true,
+                        "local": true,
+                        "default": true
+                    },
+                    "load": {
+                        "gist": true,
+                        "elasticsearch": true,
+                        "local": true
+                    },
+                    "elasticsearch_size": 20,
+                    "error": false,
+                    "hide_control": false,
+                    "elasticsearch_saveto": "kibana-int",
+                    "temp": true,
+                    "temp_ttl": "30d",
+                    "hide": false
+                }
+            ],
+            "editable": true,
+            "collapsable": true
+        },
+        {
+            "title": "Search criterias",
+            "height": "150px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 7,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "stringquery",
+                    "label": "Search",
+                    "query": "",
+                    "size": 100,
+                    "sort": [
+                        "_score",
+                        "desc"
+                    ],
+                    "multi": false,
+                    "multi_arrange": "horizontal"
+                },
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "timepicker",
+                    "mode": "absolute",
+                    "time_options": [
+                        "10y",
+                        "50y",
+                        "100y"
+                    ],
+                    "timespan": "100y",
+                    "timefield": "dateOfBirth",
+                    "index": "\"person\"",
+                    "defaultindex": "NOINDEX",
+                    "index_interval": "day",
+                    "timed_indices": true,
+                    "refresh": {
+                        "enable": false,
+                        "interval": 30,
+                        "min": 3
+                    },
+                    "time": {
+                        "from": "10/08/1968 04:41:55",
+                        "to": "10/27/1992 20:57:44"
+                    }
+                },
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 2,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "hits",
+                    "query": "",
+                    "style": {
+                        "font-size": "36pt",
+                        "font-weight": "bold"
+                    },
+                    "title": "Hits",
+                    "index": [
+                        "person"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Analytics",
+            "height": "300px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 5,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "histogram",
+                    "query": [
+                        {
+                            "query": "",
+                            "label": ""
+                        }
+                    ],
+                    "interval": "1y",
+                    "show": [
+                        "bars",
+                        "y-axis",
+                        "x-axis",
+                        "legend"
+                    ],
+                    "fill": 3,
+                    "timezone": "browser",
+                    "spyable": true,
+                    "zoomlinks": true,
+                    "title": "Date of birth",
+                    "index": [
+                        "person"
+                    ]
+                },
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "column",
+                    "panels": [
+                        {
+                            "loading": false,
+                            "error": false,
+                            "sizeable": false,
+                            "span": 12,
+                            "height": "150px",
+                            "editable": true,
+                            "group": [
+                                "default"
+                            ],
+                            "type": "pie",
+                            "query": {
+                                "field": "city",
+                                "query": "",
+                                "goal": 1
+                            },
+                            "size": 10,
+                            "exclude": [],
+                            "donut": false,
+                            "tilt": false,
+                            "legend": true,
+                            "labels": true,
+                            "mode": "terms",
+                            "default_field": "_all",
+                            "spyable": true,
+                            "title": "City",
+                            "index": [
+                                "person"
+                            ]
+                        },
+                        {
+                            "loading": false,
+                            "error": false,
+                            "sizeable": false,
+                            "span": 12,
+                            "height": "150px",
+                            "editable": true,
+                            "group": [
+                                "default"
+                            ],
+                            "type": "pie",
+                            "query": {
+                                "field": "sexe",
+                                "query": "",
+                                "goal": 1
+                            },
+                            "size": 10,
+                            "exclude": [],
+                            "donut": false,
+                            "tilt": false,
+                            "legend": true,
+                            "labels": true,
+                            "mode": "terms",
+                            "default_field": "_all",
+                            "spyable": true,
+                            "index": [
+                                "person"
+                            ],
+                            "title": "Sex"
+                        }
+                    ],
+                    "title": ""
+                },
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 4,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "map",
+                    "query": "",
+                    "map": "europe",
+                    "colors": [
+                        "#C8EEFF",
+                        "#0071A4"
+                    ],
+                    "size": 100,
+                    "exclude": [],
+                    "spyable": true,
+                    "field": "countrycode",
+                    "index": [
+                        "person"
+                    ],
+                    "title": "Countries"
+                }
+            ]
+        },
+        {
+            "title": "Results",
+            "height": "500px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 9,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "table",
+                    "query": "",
+                    "size": 100,
+                    "offset": 0,
+                    "sort": [
+                        "doc.meta.hifi",
+                        "desc"
+                    ],
+                    "style": {},
+                    "fields": [
+                        "doc.name",
+                        "doc.address.country",
+                        "doc.sexe",
+                        "doc.dateOfBirth",
+                        "doc.meta.food",
+                        "doc.meta.hifi"
+                    ],
+                    "spyable": true,
+                    "index": [
+                        "person"
+                    ],
+                    "title": "Results"
+                },
+                {
+                    "loading": false,
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "fields",
+                    "style": {},
+                    "arrange": "vertical",
+                    "micropanel_position": "left",
+                    "sort": [
+                        "doc.meta.hifi",
+                        "desc"
+                    ],
+                    "query": "",
+                    "title": "Fields"
+                }
+            ]
+        }
+    ],
+    "editable": true
+}
