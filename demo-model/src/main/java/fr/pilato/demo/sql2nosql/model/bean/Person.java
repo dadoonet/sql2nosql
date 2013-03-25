@@ -19,6 +19,9 @@
 
 package fr.pilato.demo.sql2nosql.model.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import fr.pilato.demo.sql2nosql.model.serializer.CustomDateSerializer;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -97,6 +100,7 @@ public class Person {
 		this.created = created;
 	}
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getDateOfBirth() {
         return dateOfBirth;
     }

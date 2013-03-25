@@ -24,7 +24,7 @@ You will find the following git branches:
 To go a given step, just use `git checkout` command. Eg:
 
 ```sh
-$ git checkout 02-restify/end
+$ git checkout 02-restify/begin
 ```
 
 Look at the `README` file to have details on the current step.
@@ -55,4 +55,62 @@ $ ./run.sh
 ```
 
 You can then access the application using your browser: [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
+
+
+REST Interface
+--------------
+
+Here are some basic commands:
+
+## Create
+
+```sh
+# Create one person
+$ curl -XPUT http://localhost:8080/api/1/person/ -d '{"name":"David Pilato"}'
+```
+
+## Read
+
+```sh
+# Read All Persons
+$ curl -XGET http://localhost:8080/api/1/person/
+
+# Read Person1
+$ curl -XGET http://localhost:8080/api/1/person/1
+```
+
+## Update
+
+```sh
+# Update Person #1
+$ curl -XPUT http://localhost:8080/api/1/person/1 -d '{"name":"Tugdual Grall"}'
+```
+
+## Delete
+
+```sh
+# Delete Person #1
+$ curl -XDELETE http://localhost:8080/api/1/person/1
+```
+
+## Search
+
+```sh
+# Search for something (`a la google`)
+$ curl -XPOST http://localhost:8080/api/1/person/_search -d 'q=John'
+```
+
+## Database Initialisation
+
+```sh
+# Initialize the database with 100 persons
+$ curl -XPOST http://localhost:8080/api/1/person/_init
+```
+
+You can add a `size` parameter to inject a given number of person (default to `100`):
+
+```sh
+# Initialize the database with 1 000 000 persons
+$ curl -XPOST http://localhost:8080/api/1/person/_init?size=1000000
+```
 
