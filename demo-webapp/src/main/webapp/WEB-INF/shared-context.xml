@@ -26,6 +26,6 @@
 
     <jdbc:embedded-database id="dataSource" type="HSQL">
         <!--jdbc:script location="classpath:/fr/pilato/demo/sql2nosql/model/schema.sql" /-->
-    </jdbc:embedded-database>    
+    </jdbc:embedded-database>
 
 </beans>

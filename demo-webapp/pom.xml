@@ -29,7 +29,37 @@
     <artifactId>demo-webapp</artifactId>
     <packaging>war</packaging>
 
+    <!-- Couchbase dependency -->
+    <repositories>
+        <repository>
+            <id>couchbase</id>
+            <name>Couchbase Maven Repository</name>
+            <layout>default</layout>
+            <url>http://files.couchbase.com/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
     <dependencies>
+
+        <dependency>
+            <groupId>couchbase</groupId>
+            <artifactId>couchbase-client</artifactId>
+            <version>1.1.2</version>
+            <type>jar</type>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>fr.pilato.demo.sql2nosql</groupId>
             <artifactId>demo-model</artifactId>

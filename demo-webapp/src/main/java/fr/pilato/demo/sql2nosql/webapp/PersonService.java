@@ -1,10 +1,18 @@
 package fr.pilato.demo.sql2nosql.webapp;
 
+import com.couchbase.client.CouchbaseClient;
+import com.couchbase.client.protocol.views.*;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.pilato.demo.sql2nosql.model.bean.Person;
 import fr.pilato.demo.sql2nosql.model.dao.PersonDao;
 import fr.pilato.demo.sql2nosql.model.dao.SearchDao;
 import fr.pilato.demo.sql2nosql.model.helper.PersonGenerator;
+import fr.pilato.demo.sql2nosql.webapp.util.ConnectionManager;
+import fr.pilato.demo.sql2nosql.webapp.util.KeyUtil;
+import fr.pilato.demo.sql2nosql.webapp.util.ViewUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -22,13 +31,20 @@ import java.util.Collection;
  * <li>DELETE : remove a person
  * </ul>
  * @author David Pilato
- *
  */
 @Controller
 @RequestMapping("/1/person")
 public class PersonService {
+
+    public final static String KEY_PERSON_PREFIX = "person";
+    public final static String PERSON_DSGN_DOC = "person_view";
+    public final static String PERSON_BY_NAME_VIEW = "by_name";
+    public final static String LAST_CHAR = "\\uefff";
+
     final Logger logger = LoggerFactory.getLogger(PersonService.class);
 
+    CouchbaseClient client = ConnectionManager.getInstance();
+    ObjectMapper mapper = new ObjectMapper();
     @Autowired
     PersonDao personDao;
     @Autowired
@@ -37,11 +53,8 @@ public class PersonService {
     private static final int numPersons = 1000;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public @ResponseBody Person[] getAll() {
-        Collection persons = searchDao.findPersons();
-        if (logger.isDebugEnabled()) logger.debug("getAll()={} persons", persons.size());
-
-        return (Person[]) persons.toArray(new Person[]{});
+    public @ResponseBody  ArrayList getAll() {
+        return search(null);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -73,45 +86,65 @@ public class PersonService {
 
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public @ResponseBody String update(@PathVariable String id,
-                       @RequestBody String json) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            Person person = mapper.readValue(json, Person.class);
-            if (logger.isDebugEnabled()) logger.debug("Person: {}", person);
-            if (person != null && id != null) {
-                if (person.getId() == null) person.setId(Integer.valueOf(id));
-
-                person = personDao.save(person);
-
-                if (logger.isDebugEnabled()) logger.debug("Person updated: {}", person);
-            }
-        } catch (IOException e) {
-            logger.error("Error while updating json", e);
-        }
-
+    public
+    @ResponseBody
+    String update(@PathVariable String id,
+                  @RequestBody String json) {
+        if (logger.isDebugEnabled()) logger.debug("update({})", json);
+        client.replace(KeyUtil.getKey(KEY_PERSON_PREFIX, id), 0, json);
         return "";
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public @ResponseBody String delete(@PathVariable String id) {
+    public
+    @ResponseBody
+    String delete(@PathVariable String id) {
         if (logger.isDebugEnabled()) logger.debug("Person: {}", id);
         if (id != null) {
-            personDao.delete(personDao.get(Integer.valueOf(id)));
-
+            client.delete(KeyUtil.getKey(KEY_PERSON_PREFIX, id));
             if (logger.isDebugEnabled()) logger.debug("Person deleted: {}", id);
         }
-
         return "";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/_search", params = "q")
-    public @ResponseBody Person[] search(@RequestParam String q) {
-        Collection persons = searchDao.findLikeGoogle(q);
-        if (logger.isDebugEnabled()) logger.debug("search({})={} persons", q, persons.size());
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/_search")
+    public @ResponseBody  ArrayList<HashMap<String, String>>  search() {
+        return search(null);
+    }
 
-        return (Person[]) persons.toArray(new Person[]{});
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/_search", params = "q")
+    public @ResponseBody  ArrayList<HashMap<String, String>>  search(@RequestParam String q) {
+        ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+        try {
+            View view = client.getView(PERSON_DSGN_DOC, PERSON_BY_NAME_VIEW);
+            Query query = new Query();
+            query.setIncludeDocs(true);
+            if (q != null) {
+              query.setRange(q, q + LAST_CHAR);
+            }
+
+            query.setLimit(10);
+
+            ViewResponse viewResponse = client.query(view, query);
+            for (ViewRow row : viewResponse) {
+
+                HashMap<String, String> parsedDoc = mapper.readValue( (String)row.getDocument(), HashMap.class )  ;
+
+                //HashMap<String, String> parsedDoc = gson.fromJson( (String)row.getDocument(), HashMap.class);
+                result.add( parsedDoc  );
+            }
+
+        } catch (InvalidViewException e) {
+            logger.info("View does now exist... creating it");
+            ViewUtil.createViews();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;    
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/_init")
@@ -124,18 +157,31 @@ public class PersonService {
         if (logger.isDebugEnabled()) logger.debug("Initializing database for {} persons", size);
 
         Person joe = PersonGenerator.personGenerator("Joe Smith");
-        personDao.save(joe);
+        sendToCouchbase(joe);
 
         Person john = PersonGenerator.personGenerator("John Wilson");
-        personDao.save(john);
+        sendToCouchbase(john);
 
         // We generate numPersons persons
         for (int i = 0; i < size - 1; i++) {
-            personDao.save(PersonGenerator.personGenerator());
+            sendToCouchbase(PersonGenerator.personGenerator());
+        }
 
+        // create the view
+        try {
+            client.getView(PERSON_DSGN_DOC, PERSON_BY_NAME_VIEW);
+        }  catch (InvalidViewException e) {
+            ViewUtil.createViews();
         }
         return "";
     }
 
+    private void sendToCouchbase(Person person) throws JsonProcessingException {
+        String key = KeyUtil.nextValue(KEY_PERSON_PREFIX);
+        int internalId = Integer.parseInt(key.substring(key.indexOf(KeyUtil.KEY_SEPARATOR) + 1));
+        person.setId(internalId);
+        String json = mapper.writeValueAsString(person);
+        client.set(key, 0, json);
+    }
 
 }
