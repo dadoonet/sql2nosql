@@ -58,7 +58,7 @@ public class PersonGenerator {
 
     public static Person personGenerator() throws IOException {
         Person person = new Person();
-        buildSexe(person);
+        buildGender(person);
         person.setDateOfBirth(buildBirthDate());
         person.setMeta(buildMeta());
         person.setAddress(buildAddress());
@@ -75,22 +75,22 @@ public class PersonGenerator {
             int typeMeta = numberGenerator(i, 11);
             switch (typeMeta) {
                 case 0:
-                    meta.setChaussures(nbConsult);
+                    meta.setShoes(nbConsult);
                     break;
                 case 1:
-                    meta.setJouets(nbConsult);
+                    meta.setToys(nbConsult);
                     break;
                 case 2:
-                    meta.setMode(nbConsult);
+                    meta.setFashion(nbConsult);
                     break;
                 case 3:
-                    meta.setMusique(nbConsult);
+                    meta.setMusic(nbConsult);
                     break;
                 case 4:
-                    meta.setJardin(nbConsult);
+                    meta.setGarden(nbConsult);
                     break;
                 case 5:
-                    meta.setElectronique(nbConsult);
+                    meta.setElectronic(nbConsult);
                     break;
                 case 6:
                     meta.setHifi(nbConsult);
@@ -99,7 +99,7 @@ public class PersonGenerator {
                     // meta.setMaison(nbConsult);
                     break;
                 case 8:
-                    meta.setVoiture(nbConsult);
+                    meta.setCars(nbConsult);
                     break;
                 case 9:
                     meta.setFood(nbConsult);
@@ -125,14 +125,14 @@ public class PersonGenerator {
         return date;
     }
 
-    private static void buildSexe(Person person) throws IOException {
+    private static void buildGender(Person person) throws IOException {
         int pos = numberGenerator(0, names.size());
 
         String line = names.get(pos);
         ArrayList<String> temp =  CsvReader.extractFromCommas(line);
         person.setName(temp.get(0) + " " + CsvReader.extractFromCommas(
                 names.get(numberGenerator(0, names.size()))).get(0));
-        person.setSexe(temp.get(1));
+        person.setGender(temp.get(1));
     }
 
     private static Address buildAddress() throws IOException {
