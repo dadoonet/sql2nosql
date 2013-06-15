@@ -32,16 +32,16 @@ import javax.persistence.Id;
 public class Meta {
     private Integer id = null;
 
-    private Integer voiture;
-    private Integer chaussures;
-    private Integer jouets;
-    private Integer mode;
-    private Integer musique;
-    private Integer jardin;
-    private Integer electronique;
+    private Integer cars;
+    private Integer shoes;
+    private Integer toys;
+    private Integer fashion;
+    private Integer music;
+    private Integer garden;
+    private Integer electronic;
     private Integer hifi;
     private Integer food;
-//    private Integer maison;
+//    private Integer home;
 
     /**
      * Gets id (primary key).
@@ -59,60 +59,60 @@ public class Meta {
         this.id = id;
     }
 
-    public Integer getVoiture() {
-        return voiture;
+    public Integer getCars() {
+        return cars;
     }
 
-    public void setVoiture(Integer voiture) {
-        this.voiture = voiture;
+    public void setCars(Integer cars) {
+        this.cars = cars;
     }
 
-    public Integer getChaussures() {
-        return chaussures;
+    public Integer getShoes() {
+        return shoes;
     }
 
-    public void setChaussures(Integer chaussures) {
-        this.chaussures = chaussures;
+    public void setShoes(Integer shoes) {
+        this.shoes = shoes;
     }
 
-    public Integer getJouets() {
-        return jouets;
+    public Integer getToys() {
+        return toys;
     }
 
-    public void setJouets(Integer jouets) {
-        this.jouets = jouets;
+    public void setToys(Integer toys) {
+        this.toys = toys;
     }
 
-    public Integer getMode() {
-        return mode;
+    public Integer getFashion() {
+        return fashion;
     }
 
-    public void setMode(Integer mode) {
-        this.mode = mode;
+    public void setFashion(Integer fashion) {
+        this.fashion = fashion;
     }
 
-    public Integer getMusique() {
-        return musique;
+    public Integer getMusic() {
+        return music;
     }
 
-    public void setMusique(Integer musique) {
-        this.musique = musique;
+    public void setMusic(Integer music) {
+        this.music = music;
     }
 
-    public Integer getJardin() {
-        return jardin;
+    public Integer getGarden() {
+        return garden;
     }
 
-    public void setJardin(Integer jardin) {
-        this.jardin = jardin;
+    public void setGarden(Integer garden) {
+        this.garden = garden;
     }
 
-    public Integer getElectronique() {
-        return electronique;
+    public Integer getElectronic() {
+        return electronic;
     }
 
-    public void setElectronique(Integer electronique) {
-        this.electronique = electronique;
+    public void setElectronic(Integer electronic) {
+        this.electronic = electronic;
     }
 
     public Integer getHifi() {
@@ -131,12 +131,12 @@ public class Meta {
         this.food = food;
     }
 
-//    public Integer getMaison() {
-//        return maison;
+//    public Integer getHome() {
+//        return home;
 //    }
 //
-//    public void setMaison(Integer maison) {
-//        this.maison = maison;
+//    public void setHome(Integer home) {
+//        this.home = home;
 //    }
 
     /**
@@ -147,16 +147,16 @@ public class Meta {
         StringBuilder sb = new StringBuilder();
 
         sb.append(this.getClass().getName() + "-");
-        sb.append("  voiture=" + voiture);
-        sb.append("  chaussures=" + chaussures);
-        sb.append("  jouets=" + jouets);
-        sb.append("  mode=" + mode);
-        sb.append("  musique=" + musique);
-        sb.append("  jardin=" + jardin);
-        sb.append("  electronique=" + electronique);
+        sb.append("  cars=" + cars);
+        sb.append("  shoes=" + shoes);
+        sb.append("  toys=" + toys);
+        sb.append("  fashion=" + fashion);
+        sb.append("  music=" + music);
+        sb.append("  garden=" + garden);
+        sb.append("  electronic=" + electronic);
         sb.append("  hifi=" + hifi);
         sb.append("  food=" + food);
-//    sb.append("  maison=" + maison);
+//    sb.append("  home=" + home);
 
         return sb.toString();
     }
@@ -174,16 +174,16 @@ public class Meta {
             return false;
         Meta other = (Meta) obj;
 
-        if (voiture != other.voiture) return false;
-        if (chaussures != other.chaussures) return false;
-        if (jouets != other.jouets) return false;
-        if (mode != other.mode) return false;
-        if (musique != other.musique) return false;
-        if (jardin != other.jardin) return false;
-        if (electronique != other.electronique) return false;
+        if (cars != other.cars) return false;
+        if (shoes != other.shoes) return false;
+        if (toys != other.toys) return false;
+        if (fashion != other.fashion) return false;
+        if (music != other.music) return false;
+        if (garden != other.garden) return false;
+        if (electronic != other.electronic) return false;
         if (hifi != other.hifi) return false;
         if (food != other.food) return false;
-//        if (maison != other.maison) return false;
+//        if (home != other.home) return false;
         return true;
     }
 
