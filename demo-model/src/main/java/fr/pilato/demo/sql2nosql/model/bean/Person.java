@@ -28,15 +28,15 @@ import java.util.Date;
  * {
  "nom" : "Pilato David",
  "dateOfBirth" : "1971-12-26",
- "sexe" : "homme",
+ "gender" : "male",
  "mobile" : {
  "os" : "IOS",
  "version" : "5.0.1"
  },
  "meta" : {
- "chaussures" : 10,
+ "shoes" : 10,
  "hifi" : 2700,
- "bricolage" : 1400
+ "fashion" : 1400
  }
  }
  */
@@ -46,7 +46,7 @@ public class Person {
     private Integer id = null;
     private String name = null;
     private Date dateOfBirth = null;
-    private String sexe = null;
+    private String gender = null;
     private Date created = null;
 
     private Meta meta;
@@ -105,12 +105,12 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getSexe() {
-        return sexe;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
