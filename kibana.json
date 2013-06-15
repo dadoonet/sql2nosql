@@ -1,8 +1,8 @@
 {
-    "title": "devoxxfrance",
+    "title": "sql2nosql",
     "rows": [
         {
-            "title": "Demo",
+            "title": "About",
             "collapse": false,
             "height": "50px",
             "panels": [
@@ -14,7 +14,7 @@
                     ],
                     "type": "text",
                     "title": "",
-                    "content": "Devoxx Demo\n===========\n\nWelcome to our **Devoxx demo**",
+                    "content": "SQL2NoSQL Demo\n===============\n\nWelcome to the **SQL2NoSQL demo**, [Kibana](https://github.com/elasticsearch/kibana/) powered.",
                     "style": {
                         "font-size": "14pt"
                     },
@@ -49,86 +49,8 @@
             "collapsable": true
         },
         {
-            "title": "Search criterias",
+            "title": "Search",
             "height": "150px",
-            "editable": true,
-            "collapse": false,
-            "collapsable": true,
-            "panels": [
-                {
-                    "loading": false,
-                    "error": false,
-                    "span": 7,
-                    "editable": true,
-                    "group": [
-                        "default"
-                    ],
-                    "type": "stringquery",
-                    "label": "Search",
-                    "query": "",
-                    "size": 100,
-                    "sort": [
-                        "_score",
-                        "desc"
-                    ],
-                    "multi": false,
-                    "multi_arrange": "horizontal"
-                },
-                {
-                    "loading": false,
-                    "error": false,
-                    "span": 3,
-                    "editable": true,
-                    "group": [
-                        "default"
-                    ],
-                    "type": "timepicker",
-                    "mode": "absolute",
-                    "time_options": [
-                        "10y",
-                        "50y",
-                        "100y"
-                    ],
-                    "timespan": "100y",
-                    "timefield": "dateOfBirth",
-                    "index": "\"person\"",
-                    "defaultindex": "NOINDEX",
-                    "index_interval": "day",
-                    "timed_indices": true,
-                    "refresh": {
-                        "enable": false,
-                        "interval": 30,
-                        "min": 3
-                    },
-                    "time": {
-                        "from": "10/08/1968 04:41:55",
-                        "to": "10/27/1992 20:57:44"
-                    }
-                },
-                {
-                    "loading": false,
-                    "error": false,
-                    "span": 2,
-                    "editable": true,
-                    "group": [
-                        "default"
-                    ],
-                    "type": "hits",
-                    "query": "",
-                    "style": {
-                        "font-size": "36pt",
-                        "font-weight": "bold"
-                    },
-                    "title": "Hits",
-                    "index": [
-                        "person"
-                    ]
-                }
-            ]
-        },
-        {
-            "title": "Analytics",
-            "height": "300px",
             "editable": true,
             "collapse": false,
             "collapsable": true,
@@ -141,11 +63,106 @@
                     "group": [
                         "default"
                     ],
+                    "type": "stringquery",
+                    "label": "Search",
+                    "query": [
+                        "gender:male",
+                        "gender:female"
+                    ],
+                    "size": 100,
+                    "sort": [
+                        "_score",
+                        "desc"
+                    ],
+                    "multi": true,
+                    "multi_arrange": "horizontal"
+                },
+                {
+                    "loading": false,
+                    "error": "",
+                    "span": 3,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "timepicker",
+                    "mode": "relative",
+                    "time_options": [
+                        "10y",
+                        "50y",
+                        "100y"
+                    ],
+                    "timespan": "100y",
+                    "timefield": "dateOfBirth",
+                    "index": "[person]",
+                    "defaultindex": "NOINDEX",
+                    "index_interval": "day",
+                    "timed_indices": true,
+                    "refresh": {
+                        "enable": false,
+                        "interval": 30,
+                        "min": 3
+                    },
+                    "timeformat": ""
+                },
+                {
+                    "loading": false,
+                    "span": 4,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "hits",
+                    "query": [
+                        {
+                            "query": "gender:male",
+                            "label": "gender:male"
+                        },
+                        {
+                            "query": "gender:female",
+                            "label": "gender:female"
+                        }
+                    ],
+                    "style": {
+                        "font-size": "28pt",
+                        "font-weight": "bold"
+                    },
+                    "title": "Hits",
+                    "index": [
+                        "person"
+                    ],
+                    "arrangement": "vertical",
+                    "chart": "bar",
+                    "counter_pos": "above",
+                    "donut": false,
+                    "tilt": false,
+                    "labels": true
+                }
+            ]
+        },
+        {
+            "title": "Analytics",
+            "height": "300px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "loading": false,
+                    "span": 5,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
                     "type": "histogram",
                     "query": [
                         {
-                            "query": "",
-                            "label": ""
+                            "query": "gender:male",
+                            "label": "gender:male"
+                        },
+                        {
+                            "query": "gender:female",
+                            "label": "gender:female"
                         }
                     ],
                     "interval": "1y",
@@ -162,7 +179,21 @@
                     "title": "Date of birth",
                     "index": [
                         "person"
-                    ]
+                    ],
+                    "mode": "count",
+                    "value_field": null,
+                    "auto_int": true,
+                    "resolution": 100,
+                    "linewidth": 3,
+                    "bars": false,
+                    "stack": true,
+                    "points": false,
+                    "lines": true,
+                    "legend": true,
+                    "x-axis": true,
+                    "y-axis": true,
+                    "percentage": false,
+                    "interactive": true
                 },
                 {
                     "loading": false,
@@ -187,10 +218,10 @@
                             "type": "pie",
                             "query": {
                                 "field": "city",
-                                "query": "",
+                                "query": "gender:male",
                                 "goal": 1
                             },
-                            "size": 10,
+                            "size": 5,
                             "exclude": [],
                             "donut": false,
                             "tilt": false,
@@ -216,8 +247,8 @@
                             ],
                             "type": "pie",
                             "query": {
-                                "field": "sexe",
-                                "query": "",
+                                "field": "gender",
+                                "query": "gender:male",
                                 "goal": 1
                             },
                             "size": 10,
@@ -232,7 +263,7 @@
                             "index": [
                                 "person"
                             ],
-                            "title": "Sex"
+                            "title": "Gender"
                         }
                     ],
                     "title": ""
@@ -246,7 +277,7 @@
                         "default"
                     ],
                     "type": "map",
-                    "query": "",
+                    "query": "gender:male",
                     "map": "europe",
                     "colors": [
                         "#C8EEFF",
@@ -259,7 +290,8 @@
                     "index": [
                         "person"
                     ],
-                    "title": "Countries"
+                    "title": "Countries",
+                    "index_limit": 0
                 }
             ]
         },
@@ -279,18 +311,18 @@
                         "default"
                     ],
                     "type": "table",
-                    "query": "",
+                    "query": "gender:male",
                     "size": 100,
                     "offset": 0,
                     "sort": [
-                        "doc.meta.hifi",
+                        "doc.gender",
                         "desc"
                     ],
                     "style": {},
                     "fields": [
                         "doc.name",
                         "doc.address.country",
-                        "doc.sexe",
+                        "doc.gender",
                         "doc.dateOfBirth",
                         "doc.meta.food",
                         "doc.meta.hifi"
@@ -299,7 +331,13 @@
                     "index": [
                         "person"
                     ],
-                    "title": "Results"
+                    "title": "Results",
+                    "sortable": true,
+                    "pages": 5,
+                    "header": true,
+                    "paging": true,
+                    "overflow": "height",
+                    "highlight": []
                 },
                 {
                     "loading": false,
@@ -314,14 +352,15 @@
                     "arrange": "vertical",
                     "micropanel_position": "left",
                     "sort": [
-                        "doc.meta.hifi",
+                        "doc.gender",
                         "desc"
                     ],
-                    "query": "",
+                    "query": "gender:male",
                     "title": "Fields"
                 }
             ]
         }
     ],
-    "editable": true
+    "editable": true,
+    "last": null
 }

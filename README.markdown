@@ -239,12 +239,12 @@ Adding a dashboard
 * Install kibana-dashboard plugin
 
 ```sh
-bin/plugin -install elasticsearch/kibana3
+bin/plugin -install elasticsearch/kibana
 ```
 
-* Open your browser to : [http://localhost:9200/_plugin/kibana3/](http://localhost:9200/_plugin/kibana3/)
+* Open your browser to : [http://localhost:9200/_plugin/kibana/](http://localhost:9200/_plugin/kibana/)
 
 * Create your own dashboard.
 
-* Or load this [kibana.json](json file) in Kibana. (Use Gist URL)
+* Or load this [json file](kibana.json) in Kibana. (Use Gist URL)
 
