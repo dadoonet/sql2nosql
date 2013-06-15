@@ -53,37 +53,37 @@
 
             <label class="control-label" for="Name">Cars</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.cars" name="meta.cars"  value="${person.meta.voiture}" >
+                <input type="text" class="input" id="meta.cars" name="meta.cars"  value="${person.meta.cars}" >
             </div>
 
             <label class="control-label" for="Name">Shoes</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.shoes" name="meta.shoes"  value="${person.meta.chaussures}" >
+                <input type="text" class="input" id="meta.shoes" name="meta.shoes"  value="${person.meta.shoes}" >
             </div>
 
             <label class="control-label" for="Name">Toys</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.toys" name="meta.toys"  value="${person.meta.jouets}" >
+                <input type="text" class="input" id="meta.toys" name="meta.toys"  value="${person.meta.toys}" >
             </div>
 
             <label class="control-label" for="Name">Fashion</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.fashion" name="meta.fashion"  value="${person.meta.mode}" >
+                <input type="text" class="input" id="meta.fashion" name="meta.fashion"  value="${person.meta.fashion}" >
             </div>
 
             <label class="control-label" for="Name">Music</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.music" name="meta.music"  value="${person.meta.musique}" >
+                <input type="text" class="input" id="meta.music" name="meta.music"  value="${person.meta.music}" >
             </div>
 
             <label class="control-label" for="Name">Garden</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.garden" name="meta.garden"  value="${person.meta.jardin}" >
+                <input type="text" class="input" id="meta.garden" name="meta.garden"  value="${person.meta.garden}" >
             </div>
 
             <label class="control-label" for="Name">Electronics</label>
             <div class="controls">
-                <input type="text" class="input" id="meta.meta.electronics" name="meta.electronics"  value="${person.meta.electronique}" >
+                <input type="text" class="input" id="meta.meta.electronics" name="meta.electronics"  value="${person.meta.electronic}" >
             </div>
 
             <label class="control-label" for="Name">Hifi</label>
