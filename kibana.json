@@ -18,7 +18,8 @@
                     "style": {
                         "font-size": "14pt"
                     },
-                    "mode": "markdown"
+                    "mode": "markdown",
+                    "status": "Stable"
                 },
                 {
                     "title": "Dashboard Loader",
@@ -42,7 +43,8 @@
                     "elasticsearch_saveto": "kibana-int",
                     "temp": true,
                     "temp_ttl": "30d",
-                    "hide": false
+                    "hide": false,
+                    "ttl_enable": true
                 }
             ],
             "editable": true,
@@ -56,36 +58,34 @@
             "collapsable": true,
             "panels": [
                 {
-                    "loading": false,
                     "error": false,
-                    "span": 5,
+                    "span": 4,
                     "editable": true,
                     "group": [
                         "default"
                     ],
-                    "type": "stringquery",
+                    "type": "query",
                     "label": "Search",
-                    "query": [
-                        "gender:male",
-                        "gender:female"
+                    "query": "*",
+                    "pinned": true,
+                    "history": [
+                        "john",
+                        "joe",
+                        "",
+                        "*"
                     ],
-                    "size": 100,
-                    "sort": [
-                        "_score",
-                        "desc"
-                    ],
-                    "multi": true,
-                    "multi_arrange": "horizontal"
+                    "remember": 10,
+                    "title": "Query"
                 },
                 {
-                    "loading": false,
-                    "error": "",
-                    "span": 3,
+                    "error": false,
+                    "span": 4,
                     "editable": true,
                     "group": [
                         "default"
                     ],
                     "type": "timepicker",
+                    "status": "Stable",
                     "mode": "relative",
                     "time_options": [
                         "10y",
@@ -94,97 +94,74 @@
                     ],
                     "timespan": "100y",
                     "timefield": "dateOfBirth",
-                    "index": "[person]",
-                    "defaultindex": "NOINDEX",
-                    "index_interval": "day",
-                    "timed_indices": true,
+                    "timeformat": "",
                     "refresh": {
                         "enable": false,
                         "interval": 30,
                         "min": 3
                     },
-                    "timeformat": ""
+                    "title": "Date",
+                    "filter_id": 0
                 },
                 {
-                    "loading": false,
                     "span": 4,
                     "editable": true,
                     "group": [
                         "default"
                     ],
                     "type": "hits",
-                    "query": [
-                        {
-                            "query": "gender:male",
-                            "label": "gender:male"
-                        },
-                        {
-                            "query": "gender:female",
-                            "label": "gender:female"
-                        }
-                    ],
-                    "style": {
-                        "font-size": "28pt",
-                        "font-weight": "bold"
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0,
+                            1
+                        ]
                     },
-                    "title": "Hits",
-                    "index": [
-                        "person"
-                    ],
-                    "arrangement": "vertical",
+                    "style": {
+                        "font-size": "10pt"
+                    },
+                    "arrangement": "horizontal",
                     "chart": "bar",
                     "counter_pos": "above",
                     "donut": false,
                     "tilt": false,
-                    "labels": true
+                    "labels": true,
+                    "title": "Hits"
                 }
             ]
         },
         {
             "title": "Analytics",
-            "height": "300px",
+            "height": "450px",
             "editable": true,
             "collapse": false,
             "collapsable": true,
             "panels": [
                 {
-                    "loading": false,
-                    "span": 5,
+                    "span": 6,
                     "editable": true,
                     "group": [
                         "default"
                     ],
                     "type": "histogram",
-                    "query": [
-                        {
-                            "query": "gender:male",
-                            "label": "gender:male"
-                        },
-                        {
-                            "query": "gender:female",
-                            "label": "gender:female"
-                        }
-                    ],
-                    "interval": "1y",
-                    "show": [
-                        "bars",
-                        "y-axis",
-                        "x-axis",
-                        "legend"
-                    ],
-                    "fill": 3,
-                    "timezone": "browser",
-                    "spyable": true,
-                    "zoomlinks": true,
-                    "title": "Date of birth",
-                    "index": [
-                        "person"
-                    ],
                     "mode": "count",
+                    "time_field": "dateOfBirth",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0,
+                            1
+                        ]
+                    },
                     "value_field": null,
                     "auto_int": true,
                     "resolution": 100,
+                    "interval": "1y",
+                    "fill": 0,
                     "linewidth": 3,
+                    "timezone": "browser",
+                    "spyable": true,
+                    "zoomlinks": true,
                     "bars": false,
                     "stack": true,
                     "points": false,
@@ -193,10 +170,10 @@
                     "x-axis": true,
                     "y-axis": true,
                     "percentage": false,
-                    "interactive": true
+                    "interactive": true,
+                    "title": "Date Of Birth"
                 },
                 {
-                    "loading": false,
                     "error": false,
                     "span": 3,
                     "editable": true,
@@ -206,34 +183,29 @@
                     "type": "column",
                     "panels": [
                         {
-                            "loading": false,
-                            "error": false,
-                            "sizeable": false,
-                            "span": 12,
-                            "height": "150px",
-                            "editable": true,
-                            "group": [
-                                "default"
-                            ],
                             "type": "pie",
+                            "title": "Gender",
+                            "editable": true,
+                            "mode": "terms",
                             "query": {
-                                "field": "city",
-                                "query": "gender:male",
-                                "goal": 1
+                                "field": "gender"
                             },
-                            "size": 5,
+                            "spyable": true,
+                            "queries": {
+                                "mode": "all",
+                                "ids": [
+                                    0,
+                                    1
+                                ]
+                            },
+                            "size": 10,
                             "exclude": [],
                             "donut": false,
                             "tilt": false,
-                            "legend": true,
+                            "legend": "above",
                             "labels": true,
-                            "mode": "terms",
-                            "default_field": "_all",
-                            "spyable": true,
-                            "title": "City",
-                            "index": [
-                                "person"
-                            ]
+                            "default_field": "DEFAULT",
+                            "height": "150px"
                         },
                         {
                             "loading": false,
@@ -246,121 +218,165 @@
                                 "default"
                             ],
                             "type": "pie",
+                            "title": "City",
+                            "mode": "terms",
                             "query": {
-                                "field": "gender",
-                                "query": "gender:male",
-                                "goal": 1
+                                "field": "doc.address.city"
+                            },
+                            "spyable": true,
+                            "queries": {
+                                "mode": "all",
+                                "ids": [
+                                    0,
+                                    1
+                                ]
                             },
                             "size": 10,
                             "exclude": [],
                             "donut": false,
                             "tilt": false,
-                            "legend": true,
+                            "legend": "above",
                             "labels": true,
-                            "mode": "terms",
-                            "default_field": "_all",
-                            "spyable": true,
-                            "index": [
-                                "person"
-                            ],
-                            "title": "Gender"
+                            "default_field": "DEFAULT"
                         }
-                    ],
-                    "title": ""
+                    ]
                 },
                 {
-                    "loading": false,
-                    "error": false,
-                    "span": 4,
-                    "editable": true,
-                    "group": [
-                        "default"
-                    ],
-                    "type": "map",
-                    "query": "gender:male",
-                    "map": "europe",
-                    "colors": [
-                        "#C8EEFF",
-                        "#0071A4"
-                    ],
-                    "size": 100,
-                    "exclude": [],
-                    "spyable": true,
-                    "field": "countrycode",
-                    "index": [
-                        "person"
-                    ],
-                    "title": "Countries",
-                    "index_limit": 0
-                }
-            ]
-        },
-        {
-            "title": "Results",
-            "height": "500px",
-            "editable": true,
-            "collapse": false,
-            "collapsable": true,
-            "panels": [
-                {
-                    "loading": false,
-                    "error": false,
-                    "span": 9,
-                    "editable": true,
-                    "group": [
-                        "default"
-                    ],
-                    "type": "table",
-                    "query": "gender:male",
-                    "size": 100,
-                    "offset": 0,
-                    "sort": [
-                        "doc.gender",
-                        "desc"
-                    ],
-                    "style": {},
-                    "fields": [
-                        "doc.name",
-                        "doc.address.country",
-                        "doc.gender",
-                        "doc.dateOfBirth",
-                        "doc.meta.food",
-                        "doc.meta.hifi"
-                    ],
-                    "spyable": true,
-                    "index": [
-                        "person"
-                    ],
-                    "title": "Results",
-                    "sortable": true,
-                    "pages": 5,
-                    "header": true,
-                    "paging": true,
-                    "overflow": "height",
-                    "highlight": []
-                },
-                {
-                    "loading": false,
                     "error": false,
                     "span": 3,
                     "editable": true,
                     "group": [
                         "default"
                     ],
-                    "type": "fields",
-                    "style": {},
-                    "arrange": "vertical",
-                    "micropanel_position": "left",
+                    "type": "map",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0,
+                            1
+                        ]
+                    },
+                    "size": 1000,
+                    "spyable": true,
+                    "tooltip": "_id",
+                    "field": "doc.address.countrycode",
+                    "map": "europe",
+                    "colors": [
+                        "#A0E2E2",
+                        "#265656"
+                    ],
+                    "exclude": [],
+                    "index_limit": 0,
+                    "title": "Map"
+                }
+            ]
+        },
+        {
+            "title": "Results",
+            "height": "650px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "error": false,
+                    "span": 12,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "table",
+                    "status": "Stable",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0,
+                            1
+                        ]
+                    },
+                    "size": 100,
+                    "pages": 5,
+                    "offset": 0,
                     "sort": [
-                        "doc.gender",
+                        "dateOfBirth",
                         "desc"
                     ],
-                    "query": "gender:male",
-                    "title": "Fields"
+                    "style": {
+                        "font-size": "9pt"
+                    },
+                    "overflow": "height",
+                    "fields": [
+                        "doc.name",
+                        "doc.gender",
+                        "doc.dateOfBirth",
+                        "doc.address.country",
+                        "doc.meta.food",
+                        "doc.meta.music",
+                        "doc.meta.toys"
+                    ],
+                    "highlight": [],
+                    "sortable": true,
+                    "header": true,
+                    "paging": true,
+                    "field_list": false,
+                    "spyable": true,
+                    "title": "Results"
                 }
             ]
         }
     ],
     "editable": true,
-    "last": null
+    "last": null,
+    "services": {
+        "query": {
+            "idQueue": [
+                2
+            ],
+            "list": {
+                "0": {
+                    "query": "joe",
+                    "alias": "Joe",
+                    "color": "#7EB26D",
+                    "pin": false,
+                    "id": 0,
+                    "type": "lucene"
+                },
+                "1": {
+                    "query": "john",
+                    "alias": "John",
+                    "color": "#EAB839",
+                    "pin": false,
+                    "id": 1,
+                    "type": "lucene"
+                }
+            },
+            "ids": [
+                0,
+                1
+            ]
+        },
+        "filter": {
+            "idQueue": [],
+            "list": {
+                "0": {
+                    "from": "1913-08-24T06:37:59.066Z",
+                    "to": "2013-07-30T06:37:59.067Z",
+                    "field": "dateOfBirth",
+                    "type": "time",
+                    "mandate": "must",
+                    "active": true,
+                    "alias": "",
+                    "id": 0
+                }
+            },
+            "ids": [
+                0
+            ]
+        }
+    },
+    "index": {
+        "interval": "none",
+        "pattern": "_all",
+        "default": "person"
+    }
 }
