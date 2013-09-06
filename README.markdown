@@ -120,29 +120,27 @@ Elasticsearch
 Setup
 -----
 
-* Download Elasticsearch 0.20.6
+* Download Elasticsearch 0.90.2 (Warning: couchbase plugin 1.1.0 does not work with 0.90.3 and upper)
 
 ```sh
-curl https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.6.tar.gz -o elasticsearch-0.20.6.tar.gz
-tar xf elasticsearch-0.20.6.tar.gz
-cd elasticsearch-0.20.6
+$ curl https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.2.zip -o elasticsearch-0.90.2.zip
+$ unzip elasticsearch-0.90.2.zip
+$ cd elasticsearch-0.90.2
 ```
 
 * Install couchbase plugin
 
 ```sh
 # Download the plugin
-mkdir plugins; cd plugins
-curl http://packages.couchbase.com.s3.amazonaws.com/releases/elastic-search-adapter/1.0.0/elasticsearch-transport-couchbase-1.0.0.zip -o elasticsearch-transport-couchbase-1.0.0.zip
-unzip elasticsearch-transport-couchbase-1.0.0.zip -d elasticsearch-transport-couchbase
-cd ..
+$ bin/plugin -install transport-couchbase \
+             -url http://packages.couchbase.com.s3.amazonaws.com/releases/elastic-search-adapter/1.1.0/elasticsearch-transport-couchbase-1.1.0.zip
 
 # Set your credentials
-echo "couchbase.username: Administrator" >> config/elasticsearch.yml
-echo "couchbase.password: Administrator" >> config/elasticsearch.yml
+$ echo "couchbase.username: Administrator" >> config/elasticsearch.yml
+$ echo "couchbase.password: Administrator" >> config/elasticsearch.yml
 
 # Set the number of concurrent requests ES will handle
-echo "couchbase.maxConcurrentRequests: 256" >> config/elasticsearch.yml
+$ echo "couchbase.maxConcurrentRequests: 256" >> config/elasticsearch.yml
 ```
 
 You can also add some UI plugins:
@@ -159,13 +157,13 @@ Launch
 * Start Elasticsearch
 
 ```sh
-bin/elasticsearch -f
+$ bin/elasticsearch -f
 ```
 
 * Create a template for couchbaseCheckpoint internal document and for all other types
 
 ```sh
-curl -XPUT http://localhost:9200/_template/couchbase -d '
+$ curl -XPUT http://localhost:9200/_template/couchbase -d '
 {
     "template" : "*",
     "order" : 10,
@@ -203,7 +201,7 @@ curl -XPUT http://localhost:9200/_template/couchbase -d '
 * Create the index `person`
 
 ```sh
-curl -XPUT http://localhost:9200/person
+$ curl -XPUT http://localhost:9200/person
 ```
 
 Replication from Couchbase to Elasticsearch
@@ -221,7 +219,7 @@ Check that everything is running fine
 -------------------------------------
 
 ```sh
-curl 'http://localhost:9200/person/_count?q=*&pretty'
+$ curl 'http://localhost:9200/person/_count?q=*&pretty'
 ```
 
 You should see a count > 0.
@@ -229,7 +227,7 @@ You should see a count > 0.
 You can reinject some data using the previous Database Initialisation API
 
 ```sh
-curl -XPOST http://localhost:8080/api/1/person/_init
+$ curl -XPOST http://localhost:8080/api/1/person/_init
 ```
 
 
