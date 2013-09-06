@@ -1,439 +1,338 @@
 {
-  "title": "sql2nosql",
-  "rows": [
-    {
-      "title": "About",
-      "collapse": false,
-      "height": "50px",
-      "panels": [
-        {
-          "span": 9,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "text",
-          "title": "",
-          "content": "SQL2NoSQL Demo\n===============\n\nWelcome to the **SQL2NoSQL demo**, [Kibana](https://github.com/elasticsearch/kibana/) powered.",
-          "style": {
-            "font-size": "14pt"
-          },
-          "mode": "markdown",
-          "status": "Stable"
-        },
-        {
-          "title": "Dashboard Loader",
-          "type": "dashcontrol",
-          "span": 3,
-          "group": "default",
-          "save": {
-            "gist": true,
-            "elasticsearch": true,
-            "local": true,
-            "default": true
-          },
-          "load": {
-            "gist": true,
-            "elasticsearch": true,
-            "local": true
-          },
-          "elasticsearch_size": 20,
-          "error": false,
-          "hide_control": false,
-          "elasticsearch_saveto": "kibana-int",
-          "temp": true,
-          "temp_ttl": "30d",
-          "hide": false,
-          "ttl_enable": true
-        }
-      ],
-      "editable": true,
-      "collapsable": true
-    },
-    {
-      "title": "Search",
-      "height": "150px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "error": false,
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "query",
-          "label": "Search",
-          "query": "*",
-          "pinned": true,
-          "history": [
-            "david",
-            "Noura",
-            "john",
-            "joe",
-            "nathalie",
-            "",
-            "*"
-          ],
-          "remember": 10,
-          "title": "Query"
-        },
-        {
-          "error": false,
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "filtering",
-          "title": "Filters"
-        },
-        {
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "hits",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2,
-              3
-            ]
-          },
-          "style": {
-            "font-size": "10pt"
-          },
-          "arrangement": "horizontal",
-          "chart": "bar",
-          "counter_pos": "above",
-          "donut": false,
-          "tilt": false,
-          "labels": true,
-          "title": "Hits",
-          "spyable": true
-        },
-        {
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "trends",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2,
-              3
-            ]
-          },
-          "style": {
-            "font-size": "20pt"
-          },
-          "ago": "10y",
-          "arrangement": "horizontal",
-          "title": "Trends (10y)"
-        }
-      ]
-    },
-    {
-      "title": "Analytics",
-      "height": "450px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "span": 6,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "histogram",
-          "mode": "count",
-          "time_field": "dateOfBirth",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2,
-              3
-            ]
-          },
-          "value_field": null,
-          "auto_int": true,
-          "resolution": 100,
-          "interval": "1y",
-          "fill": 0,
-          "linewidth": 3,
-          "timezone": "browser",
-          "spyable": true,
-          "zoomlinks": true,
-          "bars": false,
-          "stack": true,
-          "points": false,
-          "lines": true,
-          "legend": true,
-          "x-axis": true,
-          "y-axis": true,
-          "percentage": false,
-          "interactive": true,
-          "title": "Date Of Birth"
-        },
-        {
-          "error": false,
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "column",
-          "panels": [
-            {
-              "loading": false,
-              "error": false,
-              "sizeable": false,
-              "span": 12,
-              "height": "150px",
-              "editable": true,
-              "group": [
-                "default"
-              ],
-              "type": "terms",
-              "title": "Gender",
-              "field": "gender",
-              "chart": "pie",
-              "missing": false,
-              "queries": {
-                "mode": "pinned",
-                "ids": [
-                  0,
-                  1,
-                  2,
-                  3
-                ]
-              },
-              "exclude": [],
-              "other": false,
-              "size": 10,
-              "order": "count",
-              "style": {
-                "font-size": "10pt"
-              },
-              "donut": false,
-              "tilt": false,
-              "labels": true,
-              "arrangement": "horizontal",
-              "counter_pos": "above",
-              "spyable": true
+    "title": "Introduction",
+    "services": {
+        "query": {
+            "idQueue": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "list": {
+                "0": {
+                    "query": "*",
+                    "alias": "all",
+                    "color": "#7EB26D",
+                    "id": 0,
+                    "pin": false,
+                    "type": "lucene"
+                }
             },
-            {
-              "loading": false,
-              "error": false,
-              "sizeable": false,
-              "span": 12,
-              "height": "150px",
-              "editable": true,
-              "group": [
-                "default"
-              ],
-              "type": "terms",
-              "title": "Cities",
-              "field": "city",
-              "chart": "bar",
-              "queries": {
-                "mode": "pinned",
-                "ids": [
-                  0,
-                  1,
-                  2,
-                  3
-                ]
-              },
-              "exclude": [],
-              "missing": true,
-              "other": true,
-              "size": 10,
-              "order": "count",
-              "style": {
-                "font-size": "10pt"
-              },
-              "donut": false,
-              "tilt": false,
-              "labels": true,
-              "arrangement": "horizontal",
-              "counter_pos": "above",
-              "spyable": true
-            }
-          ]
+            "ids": [
+                0
+            ]
+        },
+        "filter": {
+            "idQueue": [
+                0,
+                1,
+                2
+            ],
+            "list": {},
+            "ids": []
+        }
+    },
+    "rows": [
+        {
+            "title": "Intro",
+            "height": "100px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "error": false,
+                    "span": 9,
+                    "editable": true,
+                    "group": [
+                        "default"
+                    ],
+                    "type": "text",
+                    "mode": "markdown",
+                    "content": "From SQL to NoSQL\n================\n\nThis demo illustrates how to make sense of your (BIG) data!\n\nSee also [SQL2NoSQL Github repository](https://github.com/dadoonet/sql2nosql).",
+                    "style": {},
+                    "title": "",
+                    "status": "Stable"
+                },
+                {
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "type": "dashcontrol",
+                    "save": {
+                        "gist": false,
+                        "elasticsearch": true,
+                        "local": true,
+                        "default": true
+                    },
+                    "load": {
+                        "gist": true,
+                        "elasticsearch": true,
+                        "local": true
+                    },
+                    "hide_control": false,
+                    "elasticsearch_size": 20,
+                    "temp": true,
+                    "ttl_enable": true,
+                    "temp_ttl": "30d"
+                }
+            ]
         },
         {
-          "error": false,
-          "span": 3,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "map",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2,
-              3
+            "title": "Query",
+            "height": "150px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "error": false,
+                    "span": 4,
+                    "editable": true,
+                    "type": "query",
+                    "label": "Search",
+                    "query": "*",
+                    "pinned": true,
+                    "history": [
+                        "*",
+                        "joe",
+                        "john"
+                    ],
+                    "remember": 10,
+                    "title": "Query"
+                },
+                {
+                    "error": false,
+                    "span": 4,
+                    "editable": true,
+                    "type": "filtering",
+                    "title": "Filters"
+                },
+                {
+                    "span": 4,
+                    "editable": true,
+                    "type": "hits",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0
+                        ]
+                    },
+                    "style": {
+                        "font-size": "10pt"
+                    },
+                    "arrangement": "horizontal",
+                    "chart": "bar",
+                    "counter_pos": "above",
+                    "donut": false,
+                    "tilt": false,
+                    "labels": true,
+                    "spyable": true,
+                    "title": "Hits"
+                }
             ]
-          },
-          "size": 1000,
-          "spyable": true,
-          "tooltip": "_id",
-          "field": "doc.address.countrycode",
-          "map": "europe",
-          "colors": [
-            "#A0E2E2",
-            "#265656"
-          ],
-          "exclude": [],
-          "index_limit": 0,
-          "title": "Map"
-        }
-      ]
-    },
-    {
-      "title": "Results",
-      "height": "650px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
+        },
         {
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "table",
-          "status": "Stable",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2,
-              3
+            "title": "Analytics",
+            "height": "450px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "span": 6,
+                    "editable": true,
+                    "type": "histogram",
+                    "mode": "count",
+                    "time_field": "doc.dateOfBirth",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0
+                        ]
+                    },
+                    "value_field": null,
+                    "auto_int": true,
+                    "resolution": 100,
+                    "interval": "1y",
+                    "fill": 3,
+                    "linewidth": 1,
+                    "timezone": "browser",
+                    "spyable": true,
+                    "zoomlinks": true,
+                    "bars": true,
+                    "stack": true,
+                    "points": false,
+                    "lines": false,
+                    "legend": true,
+                    "x-axis": true,
+                    "y-axis": true,
+                    "percentage": false,
+                    "interactive": true,
+                    "tooltip": {
+                        "value_type": "cumulative",
+                        "query_as_alias": false
+                    },
+                    "title": "Date of Birth"
+                },
+                {
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "type": "column",
+                    "panels": [
+                        {
+                            "loading": false,
+                            "error": false,
+                            "sizeable": false,
+                            "span": 12,
+                            "height": "150px",
+                            "editable": true,
+                            "type": "terms",
+                            "title": "Gender",
+                            "field": "doc.gender",
+                            "chart": "pie",
+                            "counter_pos": "above",
+                            "queries": {
+                                "mode": "all",
+                                "ids": [
+                                    0
+                                ]
+                            },
+                            "exclude": [],
+                            "missing": false,
+                            "other": false,
+                            "size": 10,
+                            "order": "count",
+                            "style": {
+                                "font-size": "10pt"
+                            },
+                            "donut": false,
+                            "tilt": false,
+                            "labels": true,
+                            "arrangement": "horizontal",
+                            "spyable": true
+                        },
+                        {
+                            "loading": false,
+                            "error": false,
+                            "sizeable": false,
+                            "span": 12,
+                            "height": "150px",
+                            "editable": true,
+                            "type": "terms",
+                            "title": "City",
+                            "field": "doc.address.city",
+                            "chart": "bar",
+                            "counter_pos": "above",
+                            "queries": {
+                                "mode": "all",
+                                "ids": [
+                                    0
+                                ]
+                            },
+                            "exclude": [],
+                            "missing": false,
+                            "other": false,
+                            "size": 10,
+                            "order": "count",
+                            "style": {
+                                "font-size": "10pt"
+                            },
+                            "donut": false,
+                            "tilt": false,
+                            "labels": true,
+                            "arrangement": "horizontal",
+                            "spyable": true
+                        }
+                    ]
+                },
+                {
+                    "error": false,
+                    "span": 3,
+                    "editable": true,
+                    "type": "map",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0
+                        ]
+                    },
+                    "map": "europe",
+                    "colors": [
+                        "#A0E2E2",
+                        "#265656"
+                    ],
+                    "size": 100,
+                    "exclude": [],
+                    "spyable": true,
+                    "index_limit": 0,
+                    "title": "European Map",
+                    "field": "doc.address.countrycode"
+                }
             ]
-          },
-          "size": 100,
-          "pages": 5,
-          "offset": 0,
-          "sort": [
-            "dateOfBirth",
-            "desc"
-          ],
-          "style": {
-            "font-size": "9pt"
-          },
-          "overflow": "height",
-          "fields": [
-            "doc.name",
-            "doc.gender",
-            "doc.dateOfBirth",
-            "doc.address.country",
-            "doc.meta.food",
-            "doc.meta.music",
-            "doc.meta.toys"
-          ],
-          "highlight": [],
-          "sortable": true,
-          "header": true,
-          "paging": true,
-          "field_list": false,
-          "spyable": true,
-          "title": "Results"
+        },
+        {
+            "title": "Results",
+            "height": "450px",
+            "editable": true,
+            "collapse": false,
+            "collapsable": true,
+            "panels": [
+                {
+                    "error": false,
+                    "span": 12,
+                    "editable": true,
+                    "type": "table",
+                    "status": "Stable",
+                    "queries": {
+                        "mode": "all",
+                        "ids": [
+                            0
+                        ]
+                    },
+                    "size": 100,
+                    "pages": 5,
+                    "offset": 0,
+                    "sort": [
+                        "dateOfBirth",
+                        "desc"
+                    ],
+                    "group": "default",
+                    "style": {
+                        "font-size": "9pt"
+                    },
+                    "overflow": "height",
+                    "fields": [
+                        "doc.name",
+                        "doc.gender",
+                        "doc.address.country",
+                        "doc.address.city",
+                        "doc.dateOfBirth",
+                        "doc.meta.cars",
+                        "doc.meta.electronic",
+                        "doc.meta.food",
+                        "doc.meta.hifi"
+                    ],
+                    "highlight": [],
+                    "sortable": true,
+                    "header": true,
+                    "paging": true,
+                    "field_list": false,
+                    "trimFactor": 300,
+                    "normTimes": true,
+                    "spyable": true,
+                    "title": "Persons"
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "editable": true,
-  "last": null,
-  "services": {
-    "query": {
-      "idQueue": [],
-      "list": {
-        "0": {
-          "query": "joe",
-          "alias": "Joe",
-          "color": "#7EB26D",
-          "pin": true,
-          "id": 0,
-          "type": "lucene"
-        },
-        "1": {
-          "query": "john",
-          "alias": "John",
-          "color": "#EAB839",
-          "pin": true,
-          "id": 1,
-          "type": "lucene"
-        },
-        "2": {
-          "query": "Noura",
-          "alias": "Noura",
-          "color": "#6ED0E0",
-          "pin": true,
-          "id": 2,
-          "type": "lucene"
-        },
-        "3": {
-          "query": "david",
-          "alias": "David",
-          "color": "#EF843C",
-          "pin": true,
-          "id": 3,
-          "type": "lucene"
-        }
-      },
-      "ids": [
-        0,
-        1,
-        2,
-        3
-      ]
+    ],
+    "editable": true,
+    "index": {
+        "interval": "none",
+        "pattern": "[logstash-]YYYY.MM.DD",
+        "default": "person"
     },
-    "filter": {
-      "idQueue": [
-        1,
-        2
-      ],
-      "list": {
-        "0": {
-          "type": "time",
-          "from": "1940-05-10T08:38:53.794Z",
-          "to": "2007-12-06T22:03:18.620Z",
-          "field": "dateOfBirth",
-          "mandate": "must",
-          "active": true,
-          "alias": "",
-          "id": 0
-        }
-      },
-      "ids": [
-        0
-      ]
-    }
-  },
-  "index": {
-    "interval": "none",
-    "pattern": "_all",
-    "default": "person"
-  }
+    "style": "dark",
+    "failover": false
 }
