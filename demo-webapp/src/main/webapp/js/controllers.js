@@ -17,6 +17,17 @@ function EntriesListCtrl($scope, $http) {
     $scope.query = null;
     $scope.result = null;
 
+    /*
+    $scope.search = function() {
+        $http({method: 'GET', url: '/api/1/person/_search?q='+ $scope.query }).success(function(data, status, headers, config) {
+            $scope.entries = data;
+        })
+            .error(function(data, status, headers, config) {
+                $scope.name = 'Error!'
+            });
+    }
+     */
+
     $scope.search = function() {
         var query;
         if ($scope.query) {
